@@ -1,0 +1,158 @@
+/*
+Room calendar plugin
+*/
+/* 
+    Created on : 18.08.2016, 17:15:24
+    Author     : Vitaliy Tereshenkov <vitaliytereshenkov@gmail.com>
+*/
+.calendar-reservation-main-wrapper{
+    background-color: #fff;
+    padding: 20px 10px;    
+}
+.rc-wrapper{
+    position: relative;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    font-size: 12px;
+}
+.rc-ajax-loader{
+    width: 180px;
+    height: 118px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.rc-table.table > thead > tr > th,
+.rc-table.table > tbody > tr > th,
+.rc-table.table > tfoot > tr > th,
+.rc-table.table > thead > tr > td,
+.rc-table.table > tbody > tr > td,
+.rc-table.table > tfoot > tr > td{
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.rc-table.table > thead:first-child > tr:first-child > th{
+    border-top: 1px solid #dddddd;
+}
+.rc-table.table > tbody > tr > td.rc-body-room-td{
+    cursor: pointer;
+}
+.rc-toolbar{
+    margin-bottom: 15px;
+}
+.rc-toolbar-header{
+    margin: 0;
+    text-align: center;
+}
+#rc-prev-range-date{
+    margin-right: 10px;
+}
+.rc-body-cell{ 
+
+}
+.rc-body-cell:hover{
+
+}
+.rc-table td:hover{
+    background-color: #f5f5f5;
+}
+
+.rc-table td.success:hover{
+    background-color: #d0e9c6;
+}
+.rc-table td.warning:hover{
+    background-color: #faf2cc;
+}
+.rc-view-container {
+    overflow: auto;
+}
+#rc-range-filter-end{
+    margin-left: -20px;
+}
+#rc-range-filter-submit{
+    margin-left: -40px;
+}
+.rc-rotated-text {
+    display: inline-block;
+    overflow: hidden;
+
+    width: 1.5em;
+    line-height: 1.5;
+}
+.rc-rotated-text__inner {
+    display: inline-block;
+    white-space: nowrap;
+
+    transform: translate(0,100%) rotate(-90deg);
+    transform-origin: 0 0;
+}
+.rc-rotated-text__inner:after {
+    content: "";
+    float: left;
+    margin-top: 100%;
+}
+.rc-body-room-title-cell{
+    font-weight: 600;
+    font-size: 12px;
+    vertical-align: middle !important;
+    -webkit-user-select: none;  
+    -moz-user-select: none;     
+    -ms-user-select: none;      
+    user-select: none;    
+}
+.rc-calendar-header,
+.not-select-text{
+    -webkit-user-select: none;  
+    -moz-user-select: none;     
+    -ms-user-select: none;      
+    user-select: none; 
+}
+.part-payed{
+    background-color: #f5f5f5;
+}
+.rc-header-all-location{
+    font-weight: bold;
+    text-align: left;
+} 
+ .hover-calendar-cell,
+ .hover-calendar-cell-temp{
+     background-color: #5bc0de;
+ }
+ .rc-table td.hover-calendar-cell:hover,
+ .rc-table td.hover-calendar-cell-temp:hover{
+     background-color: #5bc0de;
+ }
+ .rc-bottom-toolbar{
+     background-color: #f8f8f8;
+     border: 1px solid #e7e7e7;
+}
+.rc-confirm-block{
+    text-align: center;
+    padding-top: 8px;
+}
+.rc-confirm-block .btn-success{
+    margin-right: 10px;   
+}
+
+@media(max-width: 991px){
+    #rc-range-filter-end,
+    #rc-range-filter-submit{
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    .rc-toolbar-header{
+        margin-top: 10px;
+    }
+    
+}
+
+@media(max-width: 768px){
+    .rc-toolbar-header{
+        margin-top: 10px;
+    }    
+}

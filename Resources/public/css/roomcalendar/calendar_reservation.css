@@ -1,0 +1,27 @@
+/*
+Style for sonata admin calendar reservation page
+*/
+/* 
+    Created on : 28 февр. 2019 г., 13:06:36
+    Author     : vitaliy
+*/
+
+.order-form-loader {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 1050;
+    display: none;
+}
+.loader-image {
+    position: relative;
+    width: 252px;
+    height: 252px;
+    top: 50%;
+    left: 50%;
+    margin-left: -126px;
+    margin-top: -126px;
+    z-index: 1055;
+}

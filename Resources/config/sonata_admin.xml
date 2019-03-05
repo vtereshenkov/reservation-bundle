@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+  
+    <services>  
+        <service id="admin.vtereshenkov_reservation" class="Vtereshenkov\ReservationBundle\Admin\ReservationAdmin">
+            <argument />
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Controller\ReservationCRUDController</argument>
+            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Reservations"               
+            />
+        </service>
+        
+        <service id="admin.vtereshenkov_reservation_city" class="Vtereshenkov\ReservationBundle\Admin\CityAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\City</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="City"               
+            />
+        </service>                                       
+        <service id="admin.vtereshenkov_reservation_location" class="Vtereshenkov\ReservationBundle\Admin\LocationAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\Location</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Locations"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_room_type" class="Vtereshenkov\ReservationBundle\Admin\RoomTypeAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\RoomType</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Room Type"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_room" class="Vtereshenkov\ReservationBundle\Admin\RoomAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\Room</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Room"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_bed_type" class="Vtereshenkov\ReservationBundle\Admin\BedTypeAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\BedType</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Bed Type"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_bed" class="Vtereshenkov\ReservationBundle\Admin\BedAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\Bed</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Bed"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_client" class="Vtereshenkov\ReservationBundle\Admin\ClientAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\Client</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Client"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_payment_method" class="Vtereshenkov\ReservationBundle\Admin\PaymentMethodAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\PaymentMethod</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Payment Method"               
+            />
+        </service>
+        <service id="admin.vtereshenkov_reservation_invoice" class="Vtereshenkov\ReservationBundle\Admin\InvoiceAdmin">
+            <argument />
+            <argument>Vtereshenkov\ReservationBundle\Entity\Invoice</argument>
+            <argument />            
+            <tag
+                name="sonata.admin"
+                manager_type="orm"
+                group="Reservation"
+                label="Invoice"               
+            />
+        </service>        
+             
+    </services>
+</container>

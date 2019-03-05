@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Vtereshenkov\ReservationBundle\Entity\ReservationItem" table="vtereshenkov_reservation_item">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="date" type="datetime" column="date" precision="0" scale="0" nullable="false"/>
+    <field name="sum" type="float" column="sum" precision="0" scale="0" nullable="false"/>
+    <field name="tax" type="float" column="tax" precision="0" scale="0" nullable="false"/>
+    <field name="totalSum" type="float" column="total_sum" precision="0" scale="0" nullable="false"/>
+    <field name="needToPay" type="float" column="need_to_pay" precision="0" scale="0" nullable="false"/>
+    <field name="alreadyPayed" type="float" column="already_payed" precision="0" scale="0" nullable="false"/>
+    <field name="needToPayTotal" type="float" column="need_to_pay_total" precision="0" scale="0" nullable="false"/>
+    <field name="alreadyPayedTotal" type="float" column="already_payed_total" precision="0" scale="0" nullable="false"/>
+       
+    
+    <many-to-one field="status" target-entity="Vtereshenkov\ReservationBundle\Entity\Status" fetch="LAZY">
+      <join-columns>
+        <join-column name="status_id" referenced-column-name="id" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="paymentStatus" target-entity="Vtereshenkov\ReservationBundle\Entity\PaymentStatus" fetch="LAZY">
+      <join-columns>
+        <join-column name="payment_status_id" referenced-column-name="id" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="residentStatus" target-entity="Vtereshenkov\ReservationBundle\Entity\ResidentStatus" fetch="LAZY">
+      <join-columns>
+        <join-column name="resident_status_id" referenced-column-name="id" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="location" target-entity="Vtereshenkov\ReservationBundle\Entity\Location" fetch="LAZY">
+      <join-columns>
+        <join-column name="location_id" referenced-column-name="id" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="bed" target-entity="Vtereshenkov\ReservationBundle\Entity\Bed" fetch="LAZY">
+      <join-columns>
+        <join-column name="bed_id" referenced-column-name="id" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="reservation" target-entity="Vtereshenkov\ReservationBundle\Entity\Reservation" fetch="LAZY">
+      <join-columns>
+        <join-column name="reservation_id" referenced-column-name="id" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

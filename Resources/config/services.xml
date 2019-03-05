@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>   
+        <parameter key="vtereshenkov_reservation.group.label">Reservations</parameter>
+    </parameters>       
+    
+    <services>  
+        <!--  Service for formated data        -->
+        <service id="vtereshenkov_reservation.format" class="Vtereshenkov\ReservationBundle\Service\Format" public="true">                      
+        </service>                
+        <service id="Vtereshenkov\ReservationBundle\Service\Format" alias="vtereshenkov_reservation.format" />
+        <!--        ./Service for formated data        -->
+        
+        <service id="vtereshenkov_reservation.reservation.manager" class="Vtereshenkov\ReservationBundle\Service\ReservationManager" public="true">
+            <argument key="$em" type="service" id="doctrine.orm.entity_manager"/>
+            <argument key="$fh" type="service" id="vtereshenkov_reservation.format"/>           
+        </service>                
+        <service id="Vtereshenkov\ReservationBundle\Service\ReservationManager" alias="vtereshenkov_reservation.reservation.manager" />
+        
+         <service id="vtereshenkov_reservation.invoice.manager" class="Vtereshenkov\ReservationBundle\Service\InvoiceManager" public="true">
+            <argument key="$em" type="service" id="doctrine.orm.entity_manager"/>
+            <argument key="$fh" type="service" id="vtereshenkov_reservation.format"/>
+            <argument key="$rm" type="service" id="vtereshenkov_reservation.reservation.manager"/>           
+        </service>                
+        <service id="Vtereshenkov\ReservationBundle\Service\InvoiceManager" alias="vtereshenkov_reservation.invoice.manager" />
+                                           
+    </services>
+</container>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Vtereshenkov\ReservationBundle\Entity\Order" table="vtereshenkov_reservation_order">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="number" type="string" column="number" length="100" precision="0" scale="0" nullable="true"/>
+        <field name="date" type="datetime" column="date" precision="0" scale="0" nullable="false"/>
+        <field name="sum" type="float" column="sum" precision="0" scale="0" nullable="false"/>
+        <field name="deposit" type="float" column="deposit" precision="0" scale="0" nullable="true"/>
+        <field name="depositFlag" type="smallint" column="deposit_flag" precision="0" scale="0" nullable="true"/>
+        <field name="tax" type="float" column="tax" precision="0" scale="0" nullable="false"/>
+        <field name="totalSum" type="float" column="total_sum" precision="0" scale="0" nullable="false"/>
+        <field name="needToPay" type="float" column="need_to_pay" precision="0" scale="0" nullable="false"/>
+        <field name="alreadyPayed" type="float" column="already_payed" precision="0" scale="0" nullable="false"/>
+        <field name="needToPayTotal" type="float" column="need_to_pay_total" precision="0" scale="0" nullable="false"/>
+        <field name="alreadyPayedTotal" type="float" column="already_payed_total" precision="0" scale="0" nullable="false"/>
+                
+        <field name="numberOfPeople" type="integer" column="number_of_people" precision="0" scale="0" nullable="false"/>
+    
+        <many-to-one field="status" target-entity="Vtereshenkov\ReservationBundle\Entity\Status" fetch="LAZY">
+            <join-columns>
+                <join-column name="status_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="paymentStatus" target-entity="Vtereshenkov\ReservationBundle\Entity\PaymentStatus" fetch="LAZY">
+            <join-columns>
+                <join-column name="payment_status_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="residentStatus" target-entity="Vtereshenkov\ReservationBundle\Entity\ResidentStatus" fetch="LAZY">
+            <join-columns>
+                <join-column name="resident_status_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="paymentMethod" target-entity="Vtereshenkov\ReservationBundle\Entity\PaymentMethod" fetch="LAZY">
+            <join-columns>
+                <join-column name="payment_method_id" referenced-column-name="id" nullable="1"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="client" target-entity="Vtereshenkov\ReservationBundle\Entity\Client" fetch="LAZY">
+            <join-columns>
+                <join-column name="client_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-many field="location" target-entity="Vtereshenkov\ReservationBundle\Entity\Location" fetch="LAZY">
+            <join-table name="vtereshenkov_reservation_order_location">
+                <join-columns>
+                    <join-column name="order_id" referenced-column-name="id" on-delete="CASCADE"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="location_id" referenced-column-name="id" on-delete="CASCADE"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>  
+              
+        <many-to-one field="createdManager" target-entity="\Vtereshenkov\ReservationBundle\Entity\UserInterface">     
+            <join-columns>
+                <join-column name="created_manager_id" referenced-column-name="id" nullable="true"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="editedManager" target-entity="\Vtereshenkov\ReservationBundle\Entity\UserInterface">      
+            <join-columns>
+                <join-column name="edited_manager_id" referenced-column-name="id" nullable="true"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

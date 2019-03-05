@@ -1,0 +1,363 @@
+{#
+    This template generate reservation calendar for 
+    VtereshenkovReservationBundle in Sonata Admin
+#}
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block stylesheets %} 
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/vtereshenkovreservation/css/roomcalendar/roomcalendar.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vtereshenkovreservation/css/roomcalendar/calendar_reservation.css') }}">
+{% endblock %}
+
+{% block sonata_admin_content %}
+    {% block vtereshenkov_reservation_block_before_calendar %}{% endblock %}
+
+    {% block vtereshenkov_reservation_calendar %}       
+        <h2>Reservations</h2>
+        <div class="alert alert-dismissible alert-danger" id="order_message_block" style="display: none;">                                       
+            <strong>Error/notification message</strong>
+        </div>
+        <div class="calendar-reservation-main-wrapper">
+            <div id="calendar_reservation"></div>
+        </div>        
+
+        <!-- Create new reservation form -->
+        <div id="create_reservation_popup_form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createReservationPopupForm" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content well">
+                    <div class="modal-body"> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <form class="form-horizontal" id="form_reservation" data-type-send="ajax">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="bs-component">
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset>
+                                <legend>Client information</legend>
+                                <div class="form-group required">
+                                    <label for="client" class="col-lg-2 control-label">Select Client</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="client" name="client" data-sonata-select2="false">
+                                            {% for client in clients %}
+                                                <option value="{{ client.id }}" data-name="{{ client.name }}" data-email="{% if client.email %}{{ client.email }} {% endif %}" data-phone="{% if client.phone %}{{ client.phone }}{% endif %}" data-social="{% if client.profile %}{{ client.profile }}{% endif %}">{{ client.name }}</option>
+                                            {% else %}
+                                                <option>Client not find</option>
+                                            {% endfor %}                                                                               
+                                        </select>                                       
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="client_name" class="col-lg-2 control-label">Name</label>
+                                    <div class="col-lg-10">
+                                        <input class="form-control" id="client_name" name="client_name" placeholder="Name" type="text" value="" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="client_email" class="col-lg-2 control-label">Email</label>
+                                    <div class="col-lg-10">
+                                        <input class="form-control" id="client_email" name="client_email" placeholder="Email" type="email" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="client_phone" class="col-lg-2 control-label">Phone</label>
+                                    <div class="col-lg-10">
+                                        <input class="form-control" id="client_phone" name="client_phone" placeholder="Phone" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="client_social_profile" class="col-lg-2 control-label">Social Profile</label>
+                                    <div class="col-lg-10">
+                                        <input class="form-control" id="client_social_profile" name="client_social_profile" placeholder="Social Profile" type="text" value="">
+                                    </div>
+                                </div>                                
+                            </fieldset>
+
+                            <fieldset class="order-details-block">
+                                <legend>Order Details</legend>
+                                <div class="form-group">
+                                    <label for="order_summ" class="col-lg-2 control-label">Order Sum</label>
+                                    <div class="col-lg-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input class="form-control" id="order_summ" name="order_summ" placeholder="Order Summ" type="text" value="">
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="enable_tax" id="enable_tax"> To use taxes
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="order_tax" class="col-lg-2 control-label">Tax</label>
+                                    <div class="col-lg-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input class="form-control" id="order_tax" name="order_tax" placeholder="Tax" type="text" value="" disabled="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="order_total_sum" class="col-lg-2 control-label">Total Sum</label>
+                                    <div class="col-lg-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input class="form-control" id="order_total_sum" name="order_total_sum" placeholder="Total Sum" type="text" value="" disabled="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="order_deposit" class="col-lg-2 control-label">Deposit</label>
+                                    <div class="col-lg-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input class="form-control" id="order_deposit" name="order_deposit" placeholder="Deposit" type="text" value="0">
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="order_deposit_flag" id="order_deposit_flag"> Deposit already paid
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="order_number_of_people" class="col-lg-2 control-label">Number of People</label>
+                                    <div class="col-lg-10">
+                                        <input class="form-control" id="order_number_of_people" name="order_number_of_people" placeholder="Number of People" type="number" min="1" max="30" required="" value="<?php echo (!empty($applicationData['people']) ? $applicationData['people'] : '' ); ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="order_status" class="col-lg-2 control-label">Status</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="order_status" name="order_status" data-sonata-select2="false">
+                                            {% for status in orderStatusList.status %}
+                                                <option value="{{ status.id }}" {% if status.selected == true %} selected="selected"{% endif %}>{{ status.title }}</option>
+                                            {% else %}
+                                                <option>Status not find</option>
+                                            {% endfor %}                                          
+
+                                        </select>                                       
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="order_payment_status" class="col-lg-2 control-label">Payment Status</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="order_payment_status" name="order_payment_status" disabled="" data-sonata-select2="false">
+                                            {% for status in orderStatusList.payment_status %}
+                                                <option value="{{ status.id }}" {% if status.selected == true %} selected="selected"{% endif %}>{{ status.title }}</option>
+                                            {% else %}
+                                                <option>Status not find</option>
+                                            {% endfor %}                                                                               
+                                        </select>                                       
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="order_resident_status" class="col-lg-2 control-label">Resident Status</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="order_resident_status" name="order_resident_status" data-sonata-select2="false">
+                                            {% for status in orderStatusList.resident_status %}
+                                                <option value="{{ status.id }}" {% if status.selected == true %} selected="selected"{% endif %}>{{ status.title }}</option>
+                                            {% else %}
+                                                <option>Status not find</option>
+                                            {% endfor %}                                           
+
+                                        </select>                                       
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="order_payment_method" class="col-lg-2 control-label">Payment Method</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="order_payment_method" name="order_payment_method" data-sonata-select2="false">
+                                            {% for _method in orderPaymentMethodList %}
+                                                <option value="{{ _method.id }}">{{ _method.title }}</option>
+                                            {% else %}
+                                                <option>Method not find</option>
+                                            {% endfor %}                                                                                        
+                                        </select>  
+                                        <div class="checkbox checkbox-send-email" style="display: none;">
+                                            <label>
+                                                <input type="checkbox" name="send_email_payment" id="send_email_payment"> Send email with payment information
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="order_create_invoice" class="col-lg-2 control-label">Create Invoice</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="order_create_invoice" name="order_create_invoice" data-sonata-select2="false">
+                                            <option value="without_invoice">Without invoice</option>
+                                            <option value="whole_sum" selected="">Whole sum</option>
+                                            <option value="10_prepayment">10% prepayment</option>
+                                            <option value="any_sum">Any sum</option>
+                                        </select>                                       
+                                    </div>
+                                </div>
+                                <div class="form-group invoice-sum-group">
+                                    <label for="order_invoice_sum" class="col-lg-2 control-label">Invoice Sum</label>
+                                    <div class="col-lg-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input class="form-control" id="order_invoice_sum" name="order_invoice_sum" placeholder="Invoice Sum" type="text" value="">
+                                        </div>
+                                        <span class="help-block">No more than $<span id="invoice_sum_helper">0</span></span>
+                                    </div>
+                                </div>                                
+                            </fieldset>
+
+                            <fieldset class="order-reservation-block">
+                                <div class="row">
+                                    <div class="col-lg-10 col-lg-offset-2">
+                                        <div class="bs-component">
+                                            <div class="alert alert-dismissible alert-danger" id="reservation_message_block" style="display: none;">                                            
+                                                <strong>Oh snap!Change a few things up</strong> and try submitting again.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <legend>Reservations <button class="pull-right btn btn-warning  btn-xs calvulate-sum-reservation" >Calculate Sum</button></legend>
+
+
+                            </fieldset>
+                            <div class="form-group">                                   
+                                <div class="col-lg-10 col-lg-offset-2">     
+                                    <input type="hidden" name="reservation_total" id="reservation_total" value="">
+                                    <input type="hidden" name="reservation_list" id="reservation_list" value="">
+                                    <input type="hidden" name="tax_koef_value" id="tax_koef_value" value="{{ tax }}">
+                                    <button class="btn btn-warning calvulate-sum-reservation">Calculate Sum</button>
+                                    <button type="submit" name="create_action" value="" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>   
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="room_form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="roomForm" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content well">
+                    <div class="modal-body"> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <table class="table reservation-item-data">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" class="td-without-border"><h4>Client Information</h4></td>                                        
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td><span id="client_name_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Email </td>
+                                    <td><span id="client_email_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone </td>
+                                    <td><span id="client_phone_info">-</span></td>
+                                </tr>                                                               
+                                <tr>
+                                    <td colspan="2"><h4>Payment Information</h4></td>
+                                </tr>
+                                <tr>
+                                    <td>Order Sum</td>
+                                    <td><span id="order_sum_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Tax</td>
+                                    <td><span id="order_tax_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Sum</td>
+                                    <td><span id="order_total_sum_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Need to Pay </td>
+                                    <td><span id="order_need_to_pay_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Already Payed</td>
+                                    <td><span id="order_already_payed_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Need to Pay Total</td>
+                                    <td><span id="order_need_to_pay_total_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Already Payed Total</td>
+                                    <td><span id="order_already_payed_total_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Deposit</td>
+                                    <td><span id="order_deposit_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Deposit Paid</td>
+                                    <td><span id="order_deposit_flag_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Status</td>
+                                    <td><span id="order_payment_status_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Method</td>
+                                    <td><span id="order_payment_method_info">-</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2"><h4>Order Details</h4></td>
+                                </tr>
+                                <tr>
+                                    <td>Order Number</td>
+                                    <td><span id="order_number_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Reservation Period</td>
+                                    <td><span id="order_reservation_period_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Number of People</td>
+                                    <td><span id="order_number_of_people_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td><span id="order_status_info">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Resident Status</td>
+                                    <td><span id="order_resident_status_info">-</span></td>
+                                </tr>
+                            </tbody>
+                        </table>                            
+
+{#                        <a href="#" class="btn btn-primary" id="order_link">Order page</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-form-loader">
+            <div class="loader-image">
+                <img src="/bundles/vtereshenkovreservation/images/ajax_loader_blue_256.gif" alt="loader image">
+            </div>
+        </div>
+
+    {% endblock %}
+
+    {% block vtereshenkov_reservation_block_after_calendar %}{% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var reservationFilterLocationItems = {{ locations|json_encode()|raw }},
+                reservationCalendarActionUrl = "{{ path('vtereshenkov_reservation_calendar_range_data') }}";
+    </script>
+    <script src="{{ asset('bundles/vtereshenkovreservation/js/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('bundles/vtereshenkovreservation/js/roomcalendar/roomcalendar.min.js') }}"></script>
+    <script src="{{ asset('bundles/vtereshenkovreservation/js/admin/calendar_reservation.js') }}"></script>
+    <script src="{{ asset('bundles/vtereshenkovreservation/js/admin/order.js') }}"></script>
+{% endblock %}

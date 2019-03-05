@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Vtereshenkov\ReservationBundle\Entity\Client" table="vtereshenkov_reservation_client">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="text" column="name" precision="0" scale="0" nullable="false"/>
+    <field name="email" type="text" column="email" precision="0" scale="0" nullable="false"/>
+    <field name="phone" type="string" column="phone" precision="0" scale="0" nullable="true"/>
+    <field name="profile" type="text" column="social_profile" precision="0" scale="0" nullable="true"/>   
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,11 @@
+vtereshenkov_reservation_calendar_range_data:
+    path: /calendar/get-range-data
+    controller: Vtereshenkov\ReservationBundle\Controller\ReservationController::getrangedata
+    
+vtereshenkov_reservation_order:
+    path: /order/checkdates
+    controller: Vtereshenkov\ReservationBundle\Controller\OrderController::checkdates
+    
+vtereshenkov_reservation_order_create_ajax:
+    path: /order/create-ajax
+    controller: Vtereshenkov\ReservationBundle\Controller\OrderController::createAjax

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Vtereshenkov\ReservationBundle\Entity\City" table="vtereshenkov_reservation_city">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" precision="0" scale="0" nullable="false"/>
+    <field name="shortName" type="string" column="short_name" precision="0" scale="0" nullable="false"/>
+    <one-to-many field="location" target-entity="Vtereshenkov\ReservationBundle\Entity\Location" mapped-by="city" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

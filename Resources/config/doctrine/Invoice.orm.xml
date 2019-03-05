@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Vtereshenkov\ReservationBundle\Entity\Invoice" table="vtereshenkov_reservation_invoice">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="number" type="string" column="number" length="100" precision="0" scale="0" nullable="true"/>
+        <field name="date" type="datetime" column="date" precision="0" scale="0" nullable="false"/>
+        <field name="sum" type="float" column="sum" precision="0" scale="0" nullable="false"/>
+        <field name="tax" type="float" column="tax" precision="0" scale="0" nullable="false"/>
+        <field name="totalSum" type="float" column="total_sum" precision="0" scale="0" nullable="false"/>
+    
+        <many-to-one field="paymentMethod" target-entity="Vtereshenkov\ReservationBundle\Entity\PaymentMethod" fetch="LAZY">
+            <join-columns>
+                <join-column name="payment_method_id" referenced-column-name="id" nullable="1"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="client" target-entity="Vtereshenkov\ReservationBundle\Entity\Client" fetch="LAZY">
+            <join-columns>
+                <join-column name="client_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="order" target-entity="Vtereshenkov\ReservationBundle\Entity\Order" fetch="LAZY">
+            <join-columns>
+                <join-column name="order_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="paymentStatus" target-entity="Vtereshenkov\ReservationBundle\Entity\PaymentStatus" fetch="LAZY">
+            <join-columns>
+                <join-column name="payment_status_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
