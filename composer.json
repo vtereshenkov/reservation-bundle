@@ -1,0 +1,50 @@
+{
+  "name": "vtereshenkov/reservation-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony bundle adds functionality for create reservation room / bed.",
+  "keywords": ["Sonata", "Reservation"],
+  "homepage": "https://github.com/vtereshenkov/reservation",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Vitaliy Tereshenkov",
+      "email": "vtereshenkov@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "doctrine/doctrine-bundle": "^1.6.10",
+    "doctrine/orm": "^2.5.11",
+    "symfony/framework-bundle": "^4.0",
+    "sonata-project/admin-bundle": "^3.35",
+    "sonata-project/doctrine-orm-admin-bundle": "^3.6",
+    "sonata-project/user-bundle": "^4.2",
+    "symfony/yaml": "^4.1"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^4.0"
+  },  
+  "autoload": {
+    "psr-4": {
+      "Vtereshenkov\\ReservationBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Vtereshenkov\\ReservationBundle\\Tests\\": "tests/"
+    }
+  },
+  "conflict": {
+    "symfony/symfony": "<4.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1.x-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
