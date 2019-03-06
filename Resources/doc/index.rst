@@ -21,6 +21,7 @@ Installation process:
 3. Configure the VtereshenkovSonataOperationBundle
 4. Update your database schema
 5. Execute sql file from Resources/doc/init.sql
+6. Add bundle route
 
 
 Step 1: Download VtereshenkovReservationBundle using composer
@@ -106,3 +107,14 @@ Step 5: Execute sql file
 ========================
 
 Import data from sql file Resources/doc/init.sql. this file containts data for payment status, resident status and order / invoice / reservation status.
+
+Step 6: Add bundle route
+========================
+
+Add new route from bundle: 
+     .. code-block:: yaml
+
+        # config/routes.yaml
+        vtereshenkov_reservation:
+            resource: '@VtereshenkovReservationBundle/Resources/config/routes.yaml'
+            prefix: /reservation 
