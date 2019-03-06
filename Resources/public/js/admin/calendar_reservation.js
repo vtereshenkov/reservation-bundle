@@ -79,10 +79,8 @@ $(document).ready(function () {
     /*Add new order from reservation*/
     $('#calendar_reservation').on("rc-multiple-selection", function (event, param) {
         /*Generate form reservations html*/        
-        var reservations = param.data,
-            currentLocation = $('#rc-select-location').val(),
-            currentLocationText = $('#rc-select-location option:selected').text(),
-            reservationHtml = '';
+        var reservations = param.data,           
+            reservationHtml = '';           
         for(var ind = 0; ind < reservations.length; ind++){
             var reservationNumber = ind + 1,
                 bedRoom = reservations[ind].roomBed.split("/"),
@@ -93,8 +91,8 @@ $(document).ready(function () {
                                     +'<div class="form-group required">'
                                         +'<label for="reservation_location_text' + reservationNumber + '" class="col-lg-2 control-label">Location</label>'
                                         +'<div class="col-lg-10">'
-                                            +'<select class="form-control" id="reservation_location' + reservationNumber + '" data-app-location="' + currentLocation + '" disabled="">'
-                                                +'<option id="reservation_location_text' + reservationNumber + '" value="' + currentLocation + '">' + currentLocationText + '</option>'
+                                            +'<select class="form-control" id="reservation_location' + reservationNumber + '" data-app-location="' + reservations[ind].locationId + '" disabled="">'
+                                                +'<option id="reservation_location_text' + reservationNumber + '" value="' + reservations[ind].locationId + '">' + reservations[ind].locationText + '</option>'
                                             +'</select>'
                                         +'</div>'
                                     +'</div>'
